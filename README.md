@@ -233,4 +233,23 @@ Verify current URLs for each source before citing in a client or employer delive
 \- \[ ] Published walkthrough of the tenure-banding pattern
 
 
+## Screenshots
+
+### Executive
+![Executive dashboard](images/HRBI_Executive.png)
+
+### Workforce Analysis
+![Workforce analysis](images/HRBI_WorkforceAnalysis.png)
+
+### Demographics Analysis
+![Demographics analysis](images/HRBI_DemographicsAnalysis.png)
+
+### Operations
+![Operations Analysis](images/HRBI_OperationsAnalysis.png)
+
+### Absenteeism
+![Absenteeism](images/HRBI_Absenteeism_with_Tooltips.png)
+
+### Operations with Drill Through
+![Operations Analysis with Drill Through](images/HRBI_OperationsAnalysis_with_DrillThrough.png)
 

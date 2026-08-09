@@ -1,0 +1,24 @@
+# Power BI temp and recovery files
+*.tmp
+*.pbix.tmp
+*~
+.pbi/
+
+# Excel / Office lock files
+~$*
+*.xlk
+
+# Source data — keep raw HR extracts out of the repo
+/data-source/
+*.csv
+*.xlsx
+
+# Credentials — never commit these
+*.env
+config.local.*
+credentials.*
+
+# Windows / macOS clutter
+Thumbs.db
+desktop.ini
+.DS_Store

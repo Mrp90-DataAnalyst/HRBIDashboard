@@ -14,7 +14,7 @@ A multi-page workforce analytics report built in Power BI Desktop on a GCC-conte
 
 
 
-> \*\*Data statement:\*\* All data in this report is synthetic, generated for demonstration purposes. It does not represent any real organisation, employee, or employment record. No employer data, files, or assets are used anywhere in this repository.
+> \*\*Data statement:\*\* All data in this report is synthetic, generated for demonstration purposes. It does not represent any real organization, employee, or employment record. No employer data, files, or assets are used anywhere in this repository.
 
 
 
@@ -188,7 +188,7 @@ Attrition follows the standard SHRM formula: separations divided by \*average\* 
 
 
 
-1\. Clone the repository and open `BI\_Repo1.pbix` in Power BI Desktop.
+1\. Clone the repository and open `HRBI_Repo1.pbix` in Power BI Desktop.
 
 2\. The synthetic dataset is embedded — the file opens and renders without any data source configuration.
 

@@ -1,0 +1,9 @@
+let
+    Source = Table.NestedJoin(#"Merge-EmptoLoc", {"Grade"}, SalaryGrades, {"Grade"}, "SalaryGrades", JoinKind.LeftOuter),
+    #"Expanded SalaryGrades" = Table.ExpandTableColumn(Source, "SalaryGrades", {"MinSalaryQAR", "MidSalaryQAR", "MaxSalaryQAR"}, {"SalaryGrades.MinSalaryQAR", "SalaryGrades.MidSalaryQAR", "SalaryGrades.MaxSalaryQAR"}),
+    #"Reordered Columns" = Table.ReorderColumns(#"Expanded SalaryGrades",{"EmployeeID", "FullName", "Gender", "DateOfBirth", "Age", "AgeBand", "Nationality", "MaritalStatus", "HireDate", "ServiceYrs", "TenureBand", "DeptID", "DepartmentName", "Division", "JobID", "JobTitle", "JobFamily", "JobLevel", "LocationID", "LocationsCity", "LocationsEntityName", "Grade", "EmploymentType", "TotalSalary", "MonthlyBasicSalaryQAR", "Housing", "Transport", "Email", "HasEmail", "MobileNo", "HasContactInfo", "Status", "FirstName-ColfromEx", "SalaryGrades.MinSalaryQAR", "SalaryGrades.MidSalaryQAR", "SalaryGrades.MaxSalaryQAR"}),
+    #"Added Conditional Column" = Table.AddColumn(#"Reordered Columns", "Nationality Type", each if [Nationality] = "Qatari" then "Qatari" else "Non-Qatari"),
+    #"Reordered Columns1" = Table.ReorderColumns(#"Added Conditional Column",{"EmployeeID", "FullName", "Gender", "DateOfBirth", "Age", "AgeBand", "Nationality", "Nationality Type", "MaritalStatus", "HireDate", "ServiceYrs", "TenureBand", "DeptID", "DepartmentName", "Division", "JobID", "JobTitle", "JobFamily", "JobLevel", "LocationID", "LocationsCity", "LocationsEntityName", "Grade", "EmploymentType", "TotalSalary", "MonthlyBasicSalaryQAR", "Housing", "Transport", "Email", "HasEmail", "MobileNo", "HasContactInfo", "Status", "FirstName-ColfromEx", "SalaryGrades.MinSalaryQAR", "SalaryGrades.MidSalaryQAR", "SalaryGrades.MaxSalaryQAR"}),
+    #"Filtered Rows" = Table.SelectRows(#"Reordered Columns1", each true)
+in
+    #"Filtered Rows"

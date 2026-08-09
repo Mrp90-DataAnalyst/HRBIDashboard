@@ -60,6 +60,9 @@ Supporting pages: two drill-through pages (Training, Performance) and four repor
 
 \---
 
+\## Data Preparation
+
+Data preparation and cleansing logic is documented in [`/power-query`](power-query/).
 
 
 \## Data model
@@ -252,4 +255,7 @@ Verify current URLs for each source before citing in a client or employer delive
 
 ### Operations with Drill Through
 ![Operations Analysis with Drill Through](images/HRBI_OperationsAnalysis_with_DrillThrough.png)
+
+
+
 

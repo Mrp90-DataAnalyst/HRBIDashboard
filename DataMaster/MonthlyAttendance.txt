@@ -1,0 +1,27 @@
+let
+  Source = Folder.Files("C:\data\HR_Source\03_Monthly_Attendance"),
+    #"Filtered Hidden Files1" = Table.SelectRows(Source, each [Attributes]?[Hidden]? <> true),
+    #"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files1", "Transform File", each #"Transform File"([Content])),
+    #"Renamed Columns1" = Table.RenameColumns(#"Invoke Custom Function1", {"Name", "Source.Name"}),
+    #"Removed Other Columns1" = Table.SelectColumns(#"Renamed Columns1", {"Source.Name", "Transform File"}),
+    #"Expanded Table Column1" = Table.ExpandTableColumn(#"Removed Other Columns1", "Transform File", Table.ColumnNames(#"Transform File"(#"Sample File"))),
+    #"Changed Type" = Table.TransformColumnTypes(#"Expanded Table Column1",{{"Source.Name", type text}, {"EmployeeID", type text}, {"Year", Int64.Type}, {"Month", Int64.Type}, {"WorkingDays", Int64.Type}, {"DaysPresent", Int64.Type}, {"SickLeaveDays", Int64.Type}, {"AnnualLeaveDays", Int64.Type}, {"UnplannedAbsences", Int64.Type}, {"OvertimeHours", Int64.Type}}),
+    #"Added Custom" = Table.AddColumn(#"Changed Type", "MonthStart", each #date([Year],[Month],1)),
+    #"Reordered Columns" = Table.ReorderColumns(#"Added Custom",{"Source.Name", "EmployeeID", "MonthStart", "Year", "Month", "WorkingDays", "DaysPresent", "SickLeaveDays", "AnnualLeaveDays", "UnplannedAbsences", "OvertimeHours"}),
+    #"Removed Columns" = Table.RemoveColumns(#"Reordered Columns",{"MonthStart"}),
+    #"Added Custom1" = Table.AddColumn(#"Removed Columns", "MonthStart", each #date([Year], [Month], 1)),
+    #"Reordered Columns1" = Table.ReorderColumns(#"Added Custom1",{"Source.Name", "EmployeeID", "MonthStart", "Year", "Month", "WorkingDays", "DaysPresent", "SickLeaveDays", "AnnualLeaveDays", "UnplannedAbsences", "OvertimeHours"}),
+    #"Changed Type1" = Table.TransformColumnTypes(#"Reordered Columns1",{{"MonthStart", type date}}),
+    #"Filtered Rows" = Table.SelectRows(#"Changed Type1", each true),
+    #"Changed Type with Locale" = Table.TransformColumnTypes(#"Filtered Rows", {{"MonthStart", type date}}, "en-US"),
+    #"Sorted Rows" = Table.Sort(#"Changed Type with Locale",{{"EmployeeID", Order.Ascending}}),
+    #"Changed Type with Locale1" = Table.TransformColumnTypes(#"Sorted Rows", {{"MonthStart", type date}}, "en-GB"),
+    #"Inserted Month" = Table.AddColumn(#"Changed Type with Locale1", "Month.1", each Date.Month([MonthStart]), Int64.Type),
+    #"Reordered Columns2" = Table.ReorderColumns(#"Inserted Month",{"Source.Name", "EmployeeID", "MonthStart", "Year", "Month", "Month.1", "WorkingDays", "DaysPresent", "SickLeaveDays", "AnnualLeaveDays", "UnplannedAbsences", "OvertimeHours"}),
+    #"Removed Columns1" = Table.RemoveColumns(#"Reordered Columns2",{"Month.1"}),
+    #"Reordered Columns3" = Table.ReorderColumns(#"Removed Columns1",{"Source.Name", "EmployeeID", "MonthStart", "Month", "Year", "WorkingDays", "DaysPresent", "SickLeaveDays", "AnnualLeaveDays", "UnplannedAbsences", "OvertimeHours"}),
+    #"Added Conditional Column" = Table.AddColumn(#"Reordered Columns3", "Custom", each if [Month] = 9 then "September" else if [Month] = 4 then "April" else if [Month] = 11 then "November" else if [Month] = 6 then "June" else if [Month] = 10 then "October" else if [Month] = 7 then "July" else if [Month] = 1 then "January" else if [Month] = 8 then "August" else if [Month] = 5 then "May" else if [Month] = 12 then "December" else if [Month] = 3 then "March" else if [Month] = 2 then "February" else null, type text),
+    #"Reordered Columns4" = Table.ReorderColumns(#"Added Conditional Column",{"Source.Name", "EmployeeID", "MonthStart", "Month", "Custom", "Year", "WorkingDays", "DaysPresent", "SickLeaveDays", "AnnualLeaveDays", "UnplannedAbsences", "OvertimeHours"}),
+    #"Renamed Columns" = Table.RenameColumns(#"Reordered Columns4",{{"Custom", "Month Name"}})
+in
+    #"Renamed Columns"
